@@ -1,119 +1,121 @@
+// Respect the user's motion preference.
+const prefersReducedMotion =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Generate random stars
 function generateStars() {
     const starsContainer = document.getElementById('stars');
-    const starCount = window.innerWidth > 1024 ? 120 : 60;
+    if (!starsContainer) return;
 
+    let starCount = window.innerWidth > 1024 ? 120 : 60;
+    if (prefersReducedMotion) starCount = Math.round(starCount / 3);
+
+    const frag = document.createDocumentFragment();
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
-        star.className = 'star' + (Math.random() > 0.65 ? ' twinkle' : '');
+        star.className = 'star' + (!prefersReducedMotion && Math.random() > 0.65 ? ' twinkle' : '');
         star.style.left = Math.random() * 100 + '%';
         star.style.top = Math.random() * 100 + '%';
         star.style.animationDelay = Math.random() * 3 + 's';
-        starsContainer.appendChild(star);
+        frag.appendChild(star);
     }
+    starsContainer.appendChild(frag);
 }
 
 generateStars();
 
-// Navigation con soporte para URLs con hash
-function showSection(sectionId) {
-    const sections = document.querySelectorAll('.content-section');
-    sections.forEach(section => section.classList.remove('active'));
+// --- Section (hash) navigation -------------------------------------------------
 
-    if (sectionId === 'home') {
-        document.getElementById('home-section').classList.add('active');
-        document.getElementById('home-section-2').classList.add('active');
-        document.getElementById('home-section-2.1').classList.add('active');
-        document.getElementById('home-section-3').classList.add('active');
-    } else if (sectionId === 'privacy') {
-        document.getElementById('privacy-section').classList.add('active');
-    } else if (sectionId === 'terms') {
-        document.getElementById('terms-section').classList.add('active');
-    } else if (sectionId === 'download') {
-        document.getElementById('home-section-3').classList.add('active');
-    }
+// Which content sections are visible for each route.
+const SECTION_MAP = {
+    home: ['home-section', 'video-section', 'binnacle-section', 'features-section', 'download-section'],
+    video: ['video-section'],
+    privacy: ['privacy-section'],
+    terms: ['terms-section'],
+    download: ['download-section'],
+};
 
+function activateRoute(route) {
+    const ids = SECTION_MAP[route] || SECTION_MAP.home;
+    document.querySelectorAll('.content-section').forEach((section) => {
+        section.classList.toggle('active', ids.includes(section.id));
+    });
+}
+
+function showSection(route) {
+    activateRoute(route);
     window.scrollTo(0, 0);
     toggleMenu(false);
-    
-    // Actualizar la URL sin recargar la página
-    window.history.pushState(null, null, '#' + sectionId);
+    window.history.pushState(null, '', '#' + route);
 }
 
-// Manejar navegación por hash en la URL
 function handleHashNavigation() {
-    const hash = window.location.hash.slice(1) || 'home';
-    const sections = document.querySelectorAll('.content-section');
-    sections.forEach(section => section.classList.remove('active'));
-
-    if (hash === 'home') {
-        document.getElementById('home-section').classList.add('active');
-        document.getElementById('home-section-2').classList.add('active');
-        document.getElementById('home-section-2.1').classList.add('active');
-        document.getElementById('home-section-3').classList.add('active');
-    } else if (hash === 'privacy') {
-        document.getElementById('privacy-section').classList.add('active');
-    } else if (hash === 'terms') {
-        document.getElementById('terms-section').classList.add('active');
-    } else if (hash === 'download') {
-        document.getElementById('home-section-3').classList.add('active');
-    } else {
-        // Si no coincide, mostrar home por defecto
-        document.getElementById('home-section').classList.add('active');
-        document.getElementById('home-section-2').classList.add('active');
-        document.getElementById('home-section-2.1').classList.add('active');
-        document.getElementById('home-section-3').classList.add('active');
-    }
+    const route = window.location.hash.slice(1) || 'home';
+    activateRoute(SECTION_MAP[route] ? route : 'home');
 }
 
-// Llamar al cargar la página
 handleHashNavigation();
-
-// Escuchar cambios en el hash
 window.addEventListener('hashchange', handleHashNavigation);
+
+// --- Mobile menu -------------------------------------------------------------
 
 function toggleMenu(force = null) {
     const navLinks = document.getElementById('navLinks');
-    if (force === false) {
-        navLinks.classList.remove('active');
-    } else {
-        navLinks.classList.toggle('active');
+    const toggle = document.getElementById('menuToggle');
+    if (!navLinks) return;
+
+    const open = force === false ? false : (force === true ? true : !navLinks.classList.contains('active'));
+    navLinks.classList.toggle('active', open);
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     }
 }
 
-// CTA Buttons
+document.addEventListener('click', function (event) {
+    const nav = document.querySelector('nav');
+    if (nav && !nav.contains(event.target)) toggleMenu(false);
+});
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) toggleMenu(false);
+});
+
+// --- CTA buttons ------------------------------------------------------------
+
+function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+}
+
 function downloadApp() {
-    document.getElementById('home-section-3').scrollIntoView({ behavior: 'smooth' });
-}
-
-function downloadAppGoogle() {
-    //https://play.google.com/store/apps/details?id=com.santech.simon_in_space
-    open("https://play.google.com/store/apps/details?id=com.santech.simon_in_space", "_blank")
-}
-
-function downloadAppApple() {
-    alert('Download links will be available soon on  iOS App Store !!!');
-}
-
-function downloadAppApk() {
-    alert('Download links will be available soon !!!');
+    scrollToId('download-section');
 }
 
 function learnMore() {
-    document.getElementById('home-section-2').scrollIntoView({ behavior: 'smooth' });
+    scrollToId('features-section');
 }
 
-// Close menu on click outside
-document.addEventListener('click', function (event) {
-    const nav = document.querySelector('nav');
-    if (!nav.contains(event.target)) {
-        document.getElementById('navLinks').classList.remove('active');
-    }
-});
+// --- YouTube trailer facade (load the iframe only on click) ------------------
 
-// Responsive adjustments
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        document.getElementById('navLinks').classList.remove('active');
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    const year = document.getElementById('year');
+    if (year) year.textContent = String(new Date().getFullYear());
+
+    const facade = document.getElementById('videoFacade');
+    if (!facade) return;
+
+    facade.addEventListener('click', () => {
+        const id = facade.dataset.video;
+        const iframe = document.createElement('iframe');
+        iframe.src =
+            'https://www.youtube-nocookie.com/embed/' + id +
+            '?autoplay=1&rel=0&modestbranding=1';
+        iframe.title = 'Simon in Space trailer';
+        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.loading = 'lazy';
+        iframe.className = 'video-frame';
+        facade.replaceWith(iframe);
+    });
 });

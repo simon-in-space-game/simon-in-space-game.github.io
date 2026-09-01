@@ -4,11 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simon in Space - Memory Game</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="images/favicon.png">
+    <title>Simon in Space — Space Memory Game for Android</title>
+    <meta name="description"
+        content="Simon in Space is a free space-themed memory game. Repeat growing light-and-sound sequences across colorful planets, with order and pairs modes. Play now on Android.">
+
+    <!-- TODO: replace with the final production domain when it is decided -->
+    <link rel="canonical" href="https://simon-in-space-game.github.io/">
+    <meta name="theme-color" content="#060A12">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Simon in Space">
+    <meta property="og:title" content="Simon in Space — Space Memory Game for Android">
+    <meta property="og:description"
+        content="Repeat growing light-and-sound sequences across colorful planets. Free memory game for Android, with order and pairs modes.">
+    <meta property="og:url" content="https://simon-in-space-game.github.io/">
+    <meta property="og:image" content="https://simon-in-space-game.github.io/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Simon in Space — Space Memory Game for Android">
+    <meta name="twitter:description"
+        content="Repeat growing light-and-sound sequences across colorful planets. Free memory game for Android.">
+    <meta name="twitter:image" content="https://simon-in-space-game.github.io/images/og-image.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&amp;display=swap">
+
     <link rel="stylesheet" href="style.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Simon in Space",
+      "operatingSystem": "Android",
+      "applicationCategory": "GameApplication",
+      "description": "A space-themed Simon memory game. Repeat growing light-and-sound sequences across colorful planets, with order and pairs modes.",
+      "url": "https://simon-in-space-game.github.io/",
+      "image": "https://simon-in-space-game.github.io/images/og-image.jpg",
+      "installUrl": "https://play.google.com/store/apps/details?id=com.santech.simon_in_space",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "SanTech Inc.",
+        "url": "https://santech-inc.github.io/"
+      }
+    }
+    </script>
 </head>
 
 <body>
@@ -17,34 +73,29 @@
 
     <!-- Flying Rocket -->
     <div class="rocket">
-        <img src="images/landing.png" alt="Rocket" onerror="this.style.display='none'">
+        <img src="images/landing.webp" alt="" width="159" height="260" onerror="this.style.display='none'">
     </div>
 
     <!-- Flying Plate -->
     <div class="plate">
-        <img src="images/pirate.png" alt="Plate" onerror="this.style.display='none'" height="111">
+        <img src="images/pirate.webp" alt="" width="250" height="211" onerror="this.style.display='none'">
     </div>
 
     <!-- Orbiting Planets Container -->
-    <div class="planets-container">
-        <!-- Planeta 1 -->
+    <div class="planets-container" aria-hidden="true">
         <div class="planet-orbit orbit-1">
             <div class="planet-item item-1">
-                <img src="images/item1.svg" alt="Planet 1" onerror="this.style.display='none'">
+                <img src="images/item1.svg" alt="" onerror="this.style.display='none'">
             </div>
         </div>
-
-        <!-- Planeta 2 -->
         <div class="planet-orbit orbit-2">
             <div class="planet-item item-2">
-                <img src="images/item2.svg" alt="Planet 2" onerror="this.style.display='none'">
+                <img src="images/item2.svg" alt="" onerror="this.style.display='none'">
             </div>
         </div>
-
-        <!-- Planeta 3 -->
         <div class="planet-orbit orbit-3">
             <div class="planet-item item-3">
-                <img src="images/item3.svg" alt="Planet 3" onerror="this.style.display='none'">
+                <img src="images/item3.svg" alt="" onerror="this.style.display='none'">
             </div>
         </div>
     </div>
@@ -52,17 +103,22 @@
     <!-- Navigation -->
     <nav>
         <div class="logo">
-            <span class="logo-icon"><img src="images/favicon.png" alt="icon" height="30"></span>
+            <span class="logo-icon"><img src="images/favicon-32.png" alt="" width="30" height="30"></span>
             <span class="logo-text">Simon in Space</span>
         </div>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"
+            aria-controls="navLinks" onclick="toggleMenu()">☰</button>
         <ul class="nav-links" id="navLinks">
-            <a href="#home" onclick="showSection('home')">Home</a>
-            <a href="#privacy" onclick="showSection('privacy')">Privacy</a>
-            <a href="#terms" onclick="showSection('terms')">Terms</a>
-            <a href="#download" onclick="showSection('download')">Download</a>
+            <li><a href="#home" onclick="showSection('home')">Home</a></li>
+            <li><a href="#video" onclick="showSection('video')">Trailer</a></li>
+            <li><a href="#privacy" onclick="showSection('privacy')">Privacy</a></li>
+            <li><a href="#terms" onclick="showSection('terms')">Terms</a></li>
+            <li><a href="#download" onclick="showSection('download')">Download</a></li>
         </ul>
     </nav>
+
+    <!-- Hero + Trailer row (side by side on desktop, stacked on mobile) -->
+    <div class="hero-row">
 
     <!-- Hero Section -->
     <section class="hero content-section active" id="home-section">
@@ -93,39 +149,57 @@
         </div>
     </section>
 
-    <!-- caps Section -->
-    <section class="features content-section" id="home-section-2.1">
+    <!-- Trailer Section -->
+    <section class="features content-section" id="video-section">
+        <h2>Watch the Trailer</h2>
+        <div class="video-wrap">
+            <button type="button" class="video-facade" id="videoFacade"
+                data-video="-rY9uKEhSjA" aria-label="Play the Simon in Space trailer">
+                <img src="images/video-thumb.webp" alt="Simon in Space trailer" width="640" height="1392"
+                    loading="lazy">
+                <span class="video-play" aria-hidden="true">▶</span>
+            </button>
+        </div>
+    </section>
+
+    </div><!-- /.hero-row -->
+
+    <!-- Screenshots Section -->
+    <section class="features content-section" id="binnacle-section">
         <h2>Binnacle of the game</h2>
         <div class="features-grid">
             <div class="cap-card">
-                <img src="images/cap1.png" height="400" />
+                <img src="images/cap1.webp" alt="Simon in Space gameplay: repeating a light sequence on a planet"
+                    width="410" height="900" loading="lazy">
             </div>
             <div class="cap-card">
-                <img src="images/cap2.png" height="400" />
+                <img src="images/cap2.webp" alt="Simon in Space level select screen with planets to explore"
+                    width="427" height="900" loading="lazy">
             </div>
             <div class="cap-card">
-                <img src="images/cap3.png" height="400" />
+                <img src="images/cap3.webp" alt="Simon in Space pairs mode with matching symbols"
+                    width="429" height="900" loading="lazy">
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features content-section" id="home-section-2">
+    <section class="features content-section" id="features-section">
         <h2>Why Play Simon in Space?</h2>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">🧠</div>
+                <div class="feature-icon" aria-hidden="true">🧠</div>
                 <h3>Memory Training</h3>
                 <p>Improve your memory and concentration skills with challenging sequences that grow progressively
                     harder.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🌍</div>
+                <div class="feature-icon" aria-hidden="true">🌍</div>
                 <h3>Explore Planets</h3>
                 <p>Travel through beautiful and mysterious planets, each with unique challenges and visual styles.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🎮</div>
+                <div class="feature-icon" aria-hidden="true">🎮</div>
                 <h3>Multiple Modes</h3>
                 <p>Play through order mode or pairs mode. Customize your experience with audio and difficulty settings.
                 </p>
@@ -134,12 +208,22 @@
     </section>
 
     <!-- Download Section -->
-    <section class="features content-section" id="home-section-3">
+    <section class="features content-section" id="download-section">
         <h2>Download Now</h2>
-        <div class="features-grid">
-            <img src="images/google.svg" height="140" onclick="downloadAppGoogle()"/>
-            <img src="images/apple.svg" height="140" onclick="downloadAppApple()"/>
-            <img src="images/apk.svg" height="140" onclick="downloadAppApk()"/>
+        <div class="features-grid store-badges">
+            <a href="https://play.google.com/store/apps/details?id=com.santech.simon_in_space" target="_blank"
+                rel="noopener" class="store-badge">
+                <img src="images/google.svg" alt="Get it on Google Play" width="196" height="140" loading="lazy">
+            </a>
+            <span class="store-badge is-disabled" role="link" aria-disabled="true" title="Coming soon to the App Store">
+                <img src="images/apple.svg" alt="Download on the App Store (coming soon)" width="196" height="140"
+                    loading="lazy">
+                <span class="badge-note">Coming soon</span>
+            </span>
+            <span class="store-badge is-disabled" role="link" aria-disabled="true" title="Direct APK download coming soon">
+                <img src="images/apk.svg" alt="Download the APK (coming soon)" width="187" height="140" loading="lazy">
+                <span class="badge-note">Coming soon</span>
+            </span>
         </div>
     </section>
 
@@ -187,10 +271,11 @@
             information in accordance with their own privacy policies.</p>
 
         <h3>6. Contact Us</h3>
+        <!-- TODO: confirm the final contact address before publishing -->
         <p>If you have questions about this Privacy Policy, please contact us at:
             <strong>privacy@simioninspace.com</strong></p>
 
-        <p style="margin-top: 3rem; color: #808080; font-size: 0.9rem;"><em>Last Updated: January 2024</em></p>
+        <p class="last-updated"><em>Last Updated: September 2026</em></p>
     </section>
 
     <!-- Terms of Use -->
@@ -225,17 +310,27 @@
         <p>SIMON IN SPACE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.</p>
 
         <h3>8. Contact Information</h3>
+        <!-- TODO: confirm the final contact address before publishing -->
         <p>If you have questions about these Terms of Use, please contact us at:
             <strong>support@simioninspace.com</strong></p>
 
-        <p style="margin-top: 3rem; color: #808080; font-size: 0.9rem;"><em>Last Updated: January 2024</em></p>
+        <p class="last-updated"><em>Last Updated: September 2026</em></p>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Simon in Space. All rights reserved. | <a href="#privacy" onclick="showSection('privacy')">Privacy</a> | <a href="#terms" onclick="showSection('terms')">Terms</a> | <a href="#download" onclick="showSection('download')">Download</a> | <a href="mailto:support@simioninspace.com">Support</a></p>
-        <p style="margin-top: 1.5rem; font-size: 0.85rem;">Made with 🚀 by Reynaldo San Juan</p>
+        <p>&copy; <span id="year">2026</span> Simon in Space. All rights reserved. |
+            <a href="#privacy" onclick="showSection('privacy')">Privacy</a> |
+            <a href="#terms" onclick="showSection('terms')">Terms</a> |
+            <a href="#download" onclick="showSection('download')">Download</a> |
+            <!-- TODO: confirm the final contact address before publishing -->
+            <a href="mailto:support@simioninspace.com">Support</a>
+        </p>
+        <p class="footer-credit">Made by
+            <a href="https://santech-inc.github.io/" target="_blank" rel="noopener">SanTech Inc.</a>
+        </p>
     </footer>
+
     <script src="scripts.js"></script>
 </body>
 
