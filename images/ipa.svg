@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs/>
+  <style type="text/css">
+    .badge{fill:#027CD2;}
+    .label{fill:#FAFAFA;font-family:Arial, Helvetica, sans-serif;}
+  </style>
+  <path class="badge" d="M132,401.1c-1.6,0-3.1,0-4.7-0.1c-3.3,0-6.5-0.3-9.7-0.9c-3-0.5-5.9-1.5-8.6-2.9c-2.7-1.4-5.2-3.2-7.3-5.4
+    c-2.2-2.2-4-4.7-5.3-7.4c-1.4-2.8-2.3-5.7-2.8-8.8c-0.5-3.3-0.8-6.6-0.9-10c0-1.1-0.1-4.8-0.1-4.8V238.2c0,0,0-3.7,0.1-4.7
+    c0-3.3,0.3-6.7,0.9-9.9c0.5-3.1,1.4-6,2.8-8.8c2.8-5.5,7.2-10,12.6-12.8c2.7-1.4,5.6-2.4,8.6-2.9c3.2-0.5,6.5-0.8,9.8-0.9l4.7-0.1
+    h535.5l4.8,0.1c3.2,0,6.5,0.3,9.7,0.9c3,0.5,6,1.5,8.7,2.9c5.4,2.8,9.8,7.3,12.6,12.8c1.4,2.8,2.3,5.7,2.8,8.8
+    c0.5,3.3,0.8,6.7,0.9,10c0,1.5,0,3.1,0,4.7c0,2,0,3.9,0,5.8v111.1c0,1.9,0,3.8,0,5.7c0,1.7,0,3.3,0,4.9c-0.1,3.3-0.4,6.6-0.9,9.8
+    c-0.5,3.1-1.4,6.1-2.8,8.9c-1.4,2.7-3.2,5.2-5.3,7.4c-2.1,2.2-4.6,4-7.3,5.4c-2.7,1.4-5.7,2.4-8.7,2.9c-3.2,0.5-6.5,0.8-9.7,0.9
+    c-1.5,0-3.1,0.1-4.7,0.1l-5.7,0L132,401.1z"/>
+  <!-- simple download-arrow glyph -->
+  <path class="label" d="M400,235 v70 M370,278 l30,30 l30,-30" stroke="#FAFAFA" stroke-width="14"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="400" y="355" text-anchor="middle" class="label" font-size="52" font-weight="bold" letter-spacing="3">IPA</text>
+  <text x="400" y="382" text-anchor="middle" class="label" font-size="18">Direct download &#183; AltStore</text>
+</svg>
