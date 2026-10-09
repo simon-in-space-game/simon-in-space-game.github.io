@@ -32,8 +32,28 @@ const SECTION_MAP = {
     video: ['video-section'],
     privacy: ['privacy-section'],
     terms: ['terms-section'],
-    download: ['download-section'],
+    downloads: ['download-section'],
 };
+
+const STORE_URLS = {
+    android: 'https://play.google.com/store/apps/details?id=com.santech.simon_in_space',
+    apple: 'https://apps.apple.com/us/app/simon-in-space-game/id6815565060',
+};
+
+function detectStoreUrl() {
+    const uaData = navigator.userAgentData;
+    if (uaData && uaData.platform) {
+        const platform = uaData.platform.toLowerCase();
+        if (platform === 'android') return STORE_URLS.android;
+        if (platform === 'macos' || platform === 'ios' || platform === 'ipados') return STORE_URLS.apple;
+        return null;
+    }
+    // Safari (iOS/iPadOS/macOS) does not implement userAgentData.
+    const ua = navigator.userAgent;
+    if (/Android/i.test(ua)) return STORE_URLS.android;
+    if (/iPhone|iPad|iPod|Macintosh/i.test(ua)) return STORE_URLS.apple;
+    return null;
+}
 
 function activateRoute(route) {
     const ids = SECTION_MAP[route] || SECTION_MAP.home;
@@ -49,8 +69,25 @@ function showSection(route) {
     window.history.pushState(null, '', '#' + route);
 }
 
+function triggerDownloadAction() {
+    activateRoute('home');
+    const url = detectStoreUrl();
+    if (!url) return;
+    // 'noopener' as a feature always returns null, so clear opener manually instead.
+    const win = window.open(url, '_blank');
+    if (win) {
+        win.opener = null;
+    } else {
+        window.location.href = url;
+    }
+}
+
 function handleHashNavigation() {
     const route = window.location.hash.slice(1) || 'home';
+    if (route === 'download') {
+        triggerDownloadAction();
+        return;
+    }
     activateRoute(SECTION_MAP[route] ? route : 'home');
 }
 
